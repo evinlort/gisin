@@ -10,6 +10,6 @@ import { CustScene1, CustScene2, CustScene3 } from './custom_scenes.js'
     var sc3 = new CustScene3()
 
     var queue = new Queue()
-    queue.add(sc1, sc2, sc3)
+    queue.add(/* sc1, sc2, */ sc3)
     queue.run()
 })()

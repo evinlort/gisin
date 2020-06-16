@@ -1,7 +1,10 @@
 import Scene from './scene.js'
+import Renderer from './renderer.js'
 import { CreateElement } from './element.js'
-import { l, render, randomInteger } from './helpers.js'
+import { l, render, rerender, randomInteger } from './helpers.js'
 
+var renderer = new Renderer("app")
+l(renderer)
 
 export class CustScene1 extends Scene {
     body() {
@@ -29,24 +32,66 @@ export class CustScene2 extends Scene {
                     this.stop()
             }, 1000)
         }
-        cd_rerender(countdown, 3)
+        cd_rerender(countdown, 1)
     }
 }
 
 export class CustScene3 extends Scene {
     body() {
-        l("Third")
-        let game_count = new CreateElement("game_count")
-        game_count.addClass("game-countdown").addClass("countdown-digits")
+        l("opa")
+        l(renderer)
         let game = new CreateElement("GAME")
+        let game_count = new CreateElement("game_count")
         game.addClass("middle").block()
+        game_count.addClass("game-countdown").addClass("countdown-digits").setID("gamecount")
         const create_random_input = () => {
             let input = new CreateElement("input")
-            input.value(randomInteger(1, 9))
-            game.addElement(input.toHTML())
+            input.value(randomInteger(1, 9)).addClass("show-4-digits")
+            game.addElement(input)
         }
+        const get_input = (i) => {
+            let input = new CreateElement("input")
+            input.addClass("get-4-digits").value(i)
+            input.click(() => {
+                l(input.getElement().value)
+                game.addElement(this.build_digits_grid())
+            })
+            return input
+        }
+        let inner_div = new CreateElement("div")
+        for (let i = 0; i < 4; i++)
+            inner_div.addElement(get_input(i))
+
         for (let i = 0; i < 4; i++)
             create_random_input()
-        render(game_count, game)
+        game.addElement(inner_div)
+        const cd_rerender = (gc, i) => {
+            gc.text(i);
+
+            setTimeout(() => {
+                if (--i)
+                    cd_rerender(gc, i)
+                else
+                    this.stop()
+            }, 1000)
+        }
+        renderer.render(game, game_count)
+        cd_rerender(game_count, 5)
+    }
+
+    build_digits_grid() {
+        let numb = 1
+        let grid = new CreateElement("grid")
+        for (var i = 0; i < 3; i++) {
+            let row = new CreateElement("row")
+            row.block()
+            for (var j = 0; j < 3; j++) {
+                let digit = new CreateElement("digit").text(numb++)
+                row.addElement(digit)
+            }
+            grid.addElement(row)
+        }
+        grid.addClass("middle").addClass("z-above").addClass("get-digits-grid")
+        return grid
     }
 }

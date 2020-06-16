@@ -55,3 +55,31 @@
     top: 20%;
     transform: translate(-50%, -20%);
 }
+
+.show-4-digits {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 2rem;
+    font-size: larger;
+    font-weight: 900;
+    pointer-events: none;
+}
+
+.get-4-digits {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    /* pointer-events: none; */
+}
+
+.z-above {
+    z-index: 100;
+}
+
+.get-digits-grid {
+    background-color: inherit;
+    
+}

@@ -29,16 +29,23 @@ export class CreateElement {
         return this
     }
 
+    setID(id) {
+        this.setAttr("id", id)
+        return this
+    }
+
     block() {
         this.el.style = "display: block;"
         return this
     }
 
     addElement(element) {
-        if (element.hasOwnProperty("toHTML"))
-            this.el.append(element.toHTML())
-        else
-            this.el.append(element)
+        this.el.append(element.getElement())
+        return this
+    }
+
+    setAttr(name, value) {
+        this.el.setAttribute(name, value)
         return this
     }
 
@@ -47,7 +54,7 @@ export class CreateElement {
         return this
     }
 
-    toHTML() {
+    getElement() {
         return this.el
     }
 }
