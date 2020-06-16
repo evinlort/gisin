@@ -8,7 +8,6 @@ export class Queue {
     add(...scenes) {
         var i = 0
         for (var scene of scenes) {
-            l(this.queue.indexOf(scene))
             if (this.queue.indexOf(scene) === 0) {
                 scene.setId(i++)
                 this.queue.push(scene)
@@ -39,7 +38,6 @@ export class Queue {
 
     run() {
         (function sceneLoop(i, queue) {
-            l(queue[i])
             setTimeout(function () {
                 if (queue[i].getStatus() === -1) {
                     queue[i].start()

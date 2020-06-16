@@ -3,12 +3,16 @@ import { l } from "./helpers.js"
 export default class Scene {
     constructor(name) {
         this.id = null
-        this.name = name
+        this.name = null
         this.status = -1
     }
 
     setId(id) {
         this.id = id
+    }
+
+    setName(name) {
+        this.name = name
     }
 
     body() {

@@ -4,10 +4,6 @@ import { l, render, randomInteger } from './helpers.js'
 
 
 export class CustScene1 extends Scene {
-    constructor(name) {
-        super(name)
-    }
-
     body() {
         l("First")
         let button = new CreateElement("button")
@@ -18,10 +14,6 @@ export class CustScene1 extends Scene {
 }
 
 export class CustScene2 extends Scene {
-    constructor(name) {
-        super(name)
-    }
-
     body() {
         l("Second")
         let countdown = new CreateElement("countdown")
@@ -42,17 +34,12 @@ export class CustScene2 extends Scene {
 }
 
 export class CustScene3 extends Scene {
-    constructor(name) {
-        super(name)
-    }
-
     body() {
         l("Third")
         let game_count = new CreateElement("game_count")
-        game_count.addClass("game-countdown")
+        game_count.addClass("game-countdown").addClass("countdown-digits")
         let game = new CreateElement("GAME")
         game.addClass("middle").block()
-        // game.addElement(game_count.toHTML())
         const create_random_input = () => {
             let input = new CreateElement("input")
             input.value(randomInteger(1, 9))

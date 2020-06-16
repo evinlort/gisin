@@ -1,5 +1,5 @@
-// const development = true
 const development = false
+// const development = true
 const l = (...message) => {
     if (development)
         console.log(...message)
@@ -19,7 +19,6 @@ const app_div = getById("app")
 const render = (...elements) => {
     app_div.innerHTML = null
     for (var elem of elements) {
-        l(elem)
         app_div.append(elem.toHTML())
     }
 }
