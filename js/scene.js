@@ -1,8 +1,14 @@
-export class Scene {
-    constructor(id, name) {
-        this.id = id
+import { l } from "./helpers.js"
+
+export default class Scene {
+    constructor(name) {
+        this.id = null
         this.name = name
-        this.status = undefined
+        this.status = -1
+    }
+
+    setId(id) {
+        this.id = id
     }
 
     body() {
@@ -10,16 +16,17 @@ export class Scene {
     }
 
     start() {
-        if (this.status == 0) return false
+        if (this.status === 0) return false
         this.status = 1
         this.body()
+
     }
 
     stop() {
         this.status = 0
     }
 
-    getId()  {
+    getId() {
         return this.id
     }
 
@@ -27,4 +34,7 @@ export class Scene {
         return this.name
     }
 
+    getStatus() {
+        return this.status
+    }
 }

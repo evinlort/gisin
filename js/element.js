@@ -3,7 +3,6 @@ import { create, l } from './helpers.js'
 export class CreateElement {
     constructor(name) {
         this.el = create(name)
-            // this.el.textContent = name
     }
 
     text(text) {
@@ -44,7 +43,6 @@ export class CreateElement {
     }
 
     value(val) {
-        // if (this.el.hasAttribute("value"))
         this.el.value = val
         return this
     }

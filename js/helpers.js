@@ -1,11 +1,15 @@
-const l = (...message) => console.log(...message)
+// const development = true
+const development = false
+const l = (...message) => {
+    if (development)
+        console.log(...message)
+}
 
 const getById = id => document.getElementById(id)
 const getByClass = class_name => document.getElementsByClassName(class_name)
 const create = name => document.createElement(name)
 
 const randomInteger = (min, max) => {
-    // случайное число от min до (max+1)
     let rand = min + Math.random() * (max + 1 - min);
     return Math.floor(rand);
 }
