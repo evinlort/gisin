@@ -42,6 +42,7 @@ export class CustScene3 extends Scene {
         l(renderer)
         let game = new CreateElement("GAME")
         let game_count = new CreateElement("game_count")
+        let grid = this.build_digits_grid()
         game.addClass("middle").block()
         game_count.addClass("game-countdown").addClass("countdown-digits").setID("gamecount")
         const create_random_input = () => {
@@ -75,7 +76,7 @@ export class CustScene3 extends Scene {
                     this.stop()
             }, 1000)
         }
-        renderer.render(game, game_count)
+        renderer.render(game, game_count, grid)
         cd_rerender(game_count, 5)
     }
 
@@ -84,14 +85,14 @@ export class CustScene3 extends Scene {
         let grid = new CreateElement("grid")
         for (var i = 0; i < 3; i++) {
             let row = new CreateElement("row")
-            row.addClass("row-digits")
+            row.addClass("grid-row")
             for (var j = 0; j < 3; j++) {
-                let digit = new CreateElement("digit").text(numb++).addClass("digit")
+                let digit = new CreateElement("digit").text(numb++).addClass("grid-digit")
                 row.addElement(digit)
             }
             grid.addElement(row)
         }
-        grid.addClass("middle").addClass("get-digits-grid")
+        grid.addClass("grid")
         return grid
     }
 }

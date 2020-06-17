@@ -1,0 +1,22 @@
+.grid{
+    border-right: 1px solid;
+    border-top: 1px solid;
+    left: 50%;
+    top: 50%;
+}
+
+.grid-row{
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    border-bottom: 1px solid;
+}
+
+.grid-digit{
+    position: relative;
+    width: calc( 98%/3 );
+    height: 14vh;
+    line-height: 14vh;
+    text-align: center;
+    border-left: 1px solid;
+}
