@@ -84,7 +84,7 @@
 }
 
 .grid{
-    display: block;
+    display: none;
     position: relative;
     top: 25vh;
     border-right: 1px solid;

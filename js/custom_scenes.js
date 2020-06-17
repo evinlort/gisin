@@ -55,7 +55,7 @@ export class CustScene3 extends Scene {
             input.addClass("get-4-digits").value(i)
             input.click(() => {
                 l(input.getElement().value)
-                game.addElement(this.build_digits_grid())
+                grid.getElement().style.display = 'block'
             })
             return input
         }
@@ -88,6 +88,10 @@ export class CustScene3 extends Scene {
             row.addClass("grid-row")
             for (var j = 0; j < 3; j++) {
                 let digit = new CreateElement("digit").text(numb++).addClass("grid-digit")
+                digit.click((e) => {
+                    l(e.target.textContent)
+                    e.target.parentElement.parentElement.style.display = 'none'
+                })
                 row.addElement(digit)
             }
             grid.addElement(row)

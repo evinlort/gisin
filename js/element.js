@@ -44,6 +44,10 @@ export class CreateElement {
         return this
     }
 
+    removeElement(element) {
+        return this
+    }
+
     setAttr(name, value) {
         this.el.setAttribute(name, value)
         return this
