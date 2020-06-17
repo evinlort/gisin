@@ -84,14 +84,14 @@ export class CustScene3 extends Scene {
         let grid = new CreateElement("grid")
         for (var i = 0; i < 3; i++) {
             let row = new CreateElement("row")
-            row.block()
+            row.addClass("row-digits")
             for (var j = 0; j < 3; j++) {
-                let digit = new CreateElement("digit").text(numb++)
+                let digit = new CreateElement("digit").text(numb++).addClass("digit")
                 row.addElement(digit)
             }
             grid.addElement(row)
         }
-        grid.addClass("middle").addClass("z-above").addClass("get-digits-grid")
+        grid.addClass("middle").addClass("get-digits-grid")
         return grid
     }
 }

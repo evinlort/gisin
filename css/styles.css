@@ -80,6 +80,27 @@
 }
 
 .get-digits-grid {
-    background-color: inherit;
-    
+    background-color: white;
+    width: 150%;
+    height: 200%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 200%;
+    border: 1px solid black;
+}
+
+.row-digits {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dashed black;
+    height: 33%;
+    width: 100%;
+
+}
+
+.digit {
+    display: inline-block;
+    border-left: 1px dashed black;
+    width: calc( 98.75% / 3 );
+    height: 100%;
 }
