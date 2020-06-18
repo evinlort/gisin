@@ -38,46 +38,47 @@ export class CustScene2 extends Scene {
 
 export class CustScene3 extends Scene {
     body() {
-        l("opa")
-        l(renderer)
         let game = new CreateElement("GAME")
         let game_count = new CreateElement("game_count")
         let grid = this.build_digits_grid()
         game.addClass("middle").block()
         game_count.addClass("game-countdown").addClass("countdown-digits").setID("gamecount")
-        const create_random_input = () => {
-            let input = new CreateElement("input")
-            input.value(randomInteger(1, 9)).addClass("show-4-digits")
-            game.addElement(input)
-        }
-        const get_input = (i) => {
-            let input = new CreateElement("input")
-            input.addClass("get-4-digits").value(i)
-            input.click(() => {
-                l(input.getElement().value)
-                grid.getElement().style.display = 'block'
-            })
-            return input
-        }
-        let inner_div = new CreateElement("div")
+        let get_digit_div = new CreateElement("get_digit_div").block()
         for (let i = 0; i < 4; i++)
-            inner_div.addElement(get_input(i))
+            get_digit_div.addElement(this.create_get_input(grid, i))
 
         for (let i = 0; i < 4; i++)
-            create_random_input()
-        game.addElement(inner_div)
-        const cd_rerender = (gc, i) => {
-            gc.text(i);
-
-            setTimeout(() => {
-                if (--i)
-                    cd_rerender(gc, i)
-                else
-                    this.stop()
-            }, 1000)
-        }
+            game.addElement(this.create_random_input())
+        game.addElement(get_digit_div)
         renderer.render(game, game_count, grid)
-        cd_rerender(game_count, 5)
+        this.cd_rerender(game_count, 5)
+    }
+
+    create_random_input() {
+        let input = new CreateElement("input")
+        input.value(randomInteger(1, 9)).addClass("show-4-digits")
+        return input
+    }
+
+    create_get_input(grid, i) {
+        let input = new CreateElement("input")
+        input.addClass("get-4-digits").value(i)
+        input.click(() => {
+            l(input.getElement().value)
+            grid.getElement().style.display = 'block'
+        })
+        return input
+    }
+
+    cd_rerender(gc, i) {
+        gc.text(i);
+
+        setTimeout(() => {
+            if (--i)
+                this.cd_rerender(gc, i)
+            else
+                this.stop()
+        }, 1000)
     }
 
     build_digits_grid() {
@@ -89,7 +90,6 @@ export class CustScene3 extends Scene {
             for (var j = 0; j < 3; j++) {
                 let digit = new CreateElement("digit").text(numb++).addClass("grid-digit")
                 digit.click((e) => {
-                    l(e.target.textContent)
                     e.target.parentElement.parentElement.style.display = 'none'
                 })
                 row.addElement(digit)
