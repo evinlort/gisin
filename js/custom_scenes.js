@@ -41,9 +41,15 @@ export class CustScene2 extends Scene {
 export class CustScene3 extends Scene {
     body() {
         var queue = new Queue()
-        var sub1 = new Sub1Scene3()
-        var sub2 = new Sub2Scene3()
-        queue.add(sub1, sub2)
+        // eval("evg = 12") // creates variable `evg` with value of 12
+        var show = new ShowDigits()
+        var show2 = new ShowDigits()
+        var get = new GetDigits()
+        var show3 = new ShowDigits()
+        var get2 = new GetDigits()
+        var get3 = new GetDigits()
+
+        queue.add(show, show2, get, show3, get2, get3)
         queue.run(
             () => this.stop()
         )
@@ -108,7 +114,7 @@ export class CustSceneEnd extends Scene{
     }
 }
 
-class Sub1Scene3 extends CustScene3 {
+class ShowDigits extends CustScene3 {
     body() {
         let game = new CreateElement("GAME")
         let game_count = new CreateElement("game_count")
@@ -121,7 +127,7 @@ class Sub1Scene3 extends CustScene3 {
     }
 }
 
-class Sub2Scene3 extends CustScene3 {
+class GetDigits extends CustScene3 {
     body() {
         let game = new CreateElement("GAME")
         let game_count = new CreateElement("game_count")
@@ -133,6 +139,6 @@ class Sub2Scene3 extends CustScene3 {
             get_digit_div.addElement(this.create_get_input(grid, i))
         game.addElement(get_digit_div)
         renderer.render(game, game_count, grid)
-        // this.cd_rerender(game_count, 6)
+        this.cd_rerender(game_count, 6)
     }
 }
