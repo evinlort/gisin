@@ -5,6 +5,10 @@ export class Queue {
         this.queue = Array()
     }
 
+    is_empty() {
+        return this.queue.length
+    }
+
     add(...scenes) {
         var i = 0
         for (var scene of scenes) {
@@ -28,30 +32,33 @@ export class Queue {
 
     remove(id) {
         this.queue.forEach((scene, index) => {
-            if (scene.getId == id) {
+            if (scene.getId() == id) {
                 this.queue.splice(index, 1)
                 return true
             }
         })
-        throw new Error("Scene with ID: " + id + " not found")
     }
 
-    run() {
-        (function sceneLoop(i, queue) {
+    run(callback=null) {
+        (function sceneLoop(i, that) {
             setTimeout(function () {
-                if (queue[i].getStatus() === -1) {
-                    queue[i].start()
+                if (that.queue[i].getStatus() === -1) {
+                    that.queue[i].start()
                 }
-                if (queue[i].getStatus() !== 0) {
-                    sceneLoop(i, queue)
+                if (that.queue[i].getStatus() !== 0) {
+                    sceneLoop(i, that)
                 }
                 else {
                     i++
-                    if (i < queue.length) {
-                        sceneLoop(i, queue)
+                    if (i < that.queue.length) {
+                        sceneLoop(i, that)
+                    }
+                    else {
+                        if(callback)
+                            callback()
                     }
                 }
-            }, 10)
-        })(0, this.queue);
+            }, 50)
+        })(0, this)
     }
 }

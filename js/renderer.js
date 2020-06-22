@@ -12,29 +12,19 @@ export default class Renderer {
     }
 
     render(...elements) {
-        l("in render start")
-        l(this.app)
         this.app.innerHTML = null
-        l(this.app)
         for (var element of elements) {
-            l(element)
             this.app.append(element.getElement())
         }
-        l("in render end")
-        l(this.app)
     }
 
     rerender(element) {
-        l("in rerender")
-        l(this.app)
         let el = element.getElement()
         if(!el.hasAttribute("id")) {
             throw new Error("Can't remove element without id")
         }
         let existed_element = this.app.querySelector("#"+el.id)
-        l(existed_element)
         let parent = existed_element.parentNode
-        l(parent)
         l(parent.insertBefore(el, existed_element))
         throw new Error()
         existed_element.remove()

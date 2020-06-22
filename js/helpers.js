@@ -27,4 +27,4 @@ const rerender = element => {
     l(element.getElement().tagName)
 } 
 
-export { l, getById, getByClass, create, render, randomInteger, rerender }
+export { l, getById, getByClass, create, render, randomInteger }
