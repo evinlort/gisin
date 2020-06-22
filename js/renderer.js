@@ -9,6 +9,11 @@ export default class Renderer {
         else
             this.app = document.getElementById(app_element)
         this.app.innerHTML = null
+        window.addEventListener("click", () => {
+            if (document.querySelector("grid") !== null)
+                document.querySelector("grid").style.display = "none"
+        })
+
     }
 
     render(...elements) {
@@ -20,10 +25,10 @@ export default class Renderer {
 
     rerender(element) {
         let el = element.getElement()
-        if(!el.hasAttribute("id")) {
+        if (!el.hasAttribute("id")) {
             throw new Error("Can't remove element without id")
         }
-        let existed_element = this.app.querySelector("#"+el.id)
+        let existed_element = this.app.querySelector("#" + el.id)
         let parent = existed_element.parentNode
         l(parent.insertBefore(el, existed_element))
         throw new Error()

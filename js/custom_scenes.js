@@ -59,6 +59,7 @@ export class CustScene3 extends Scene {
         let input = new CreateElement("input")
         input.setAttr("id", "getInp-"+i).addClass("get-4-digits").value("").setAttr("onfocus", "this.blur();")
         input.click((e) => {
+            e.stopPropagation()
             grid.setAttr("data-input_id", i)
             grid.getElement().style.display = 'block'
         })
@@ -86,7 +87,6 @@ export class CustScene3 extends Scene {
                 let digit = new CreateElement("digit").text(numb++).addClass("grid-digit")
                 digit.click((e) => {
                     let inp = document.getElementById("getInp-"+e.target.parentElement.parentElement.dataset.input_id)
-                    l(digit)
                     inp.value = digit.getElement().textContent
                     e.target.parentElement.parentElement.style.display = 'none'
                 })
@@ -117,7 +117,7 @@ class Sub1Scene3 extends CustScene3 {
         for (let i = 0; i < 4; i++)
             game.addElement(this.create_random_input())
         renderer.render(game, game_count)
-        this.cd_rerender(game_count, 0)
+        this.cd_rerender(game_count, 3)
     }
 }
 
@@ -133,6 +133,6 @@ class Sub2Scene3 extends CustScene3 {
             get_digit_div.addElement(this.create_get_input(grid, i))
         game.addElement(get_digit_div)
         renderer.render(game, game_count, grid)
-        // this.cd_rerender(game_count, 5)
+        // this.cd_rerender(game_count, 6)
     }
 }
