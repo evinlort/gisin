@@ -57,7 +57,7 @@ export class CustScene3 extends Scene {
 
     create_get_input(grid, i) {
         let input = new CreateElement("input")
-        input.addClass("get-4-digits").value("")
+        input.addClass("get-4-digits").value("").setAttr("onfocus", "this.blur();")
         input.click(() => {
             grid.getElement().style.display = 'block'
         })
