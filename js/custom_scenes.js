@@ -57,8 +57,9 @@ export class CustScene3 extends Scene {
 
     create_get_input(grid, i) {
         let input = new CreateElement("input")
-        input.addClass("get-4-digits").value("").setAttr("onfocus", "this.blur();")
-        input.click(() => {
+        input.setAttr("id", "getInp-"+i).addClass("get-4-digits").value("").setAttr("onfocus", "this.blur();")
+        input.click((e) => {
+            grid.setAttr("data-input_id", i)
             grid.getElement().style.display = 'block'
         })
         return input
@@ -84,6 +85,9 @@ export class CustScene3 extends Scene {
             for (var j = 0; j < 3; j++) {
                 let digit = new CreateElement("digit").text(numb++).addClass("grid-digit")
                 digit.click((e) => {
+                    let inp = document.getElementById("getInp-"+e.target.parentElement.parentElement.dataset.input_id)
+                    l(digit)
+                    inp.value = digit.getElement().textContent
                     e.target.parentElement.parentElement.style.display = 'none'
                 })
                 row.addElement(digit)
