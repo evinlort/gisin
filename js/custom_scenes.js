@@ -76,6 +76,10 @@ export class CustScene3 extends Scene {
             })
             input.addClass("selected-input")
         })
+        if (i == 0) {
+            input.addClass("selected-input")
+            input.getElement().dispatchEvent(new Event("click"))
+        }
         return input
     }
 
@@ -102,7 +106,7 @@ export class CustScene3 extends Scene {
                     inp.nextSibling.dispatchEvent(new Event("click"))
                 else
                     inp.parentNode.firstChild.dispatchEvent(new Event("click"))
-                
+
             })
             grid.addElement(digit)
         }
