@@ -42,6 +42,7 @@ export class CustScene3 extends Scene {
     body() {
         var queue = new Queue()
         // eval("evg = 12") // creates variable `evg` with value of 12
+        var show,show2,show3,get,get2,get3
         var show = new ShowDigits()
         var show2 = new ShowDigits()
         var get = new GetDigits()
@@ -118,7 +119,7 @@ class ShowDigits extends CustScene3 {
     body() {
         let game = new CreateElement("GAME")
         let game_count = new CreateElement("game_count")
-        game.addClass("middle").block()
+        game.addClass("middle-width").block()
         game_count.addClass("game-countdown").addClass("countdown-digits").setID("gamecount")
         for (let i = 0; i < 4; i++)
             game.addElement(this.create_random_input())
@@ -132,7 +133,7 @@ class GetDigits extends CustScene3 {
         let game = new CreateElement("GAME")
         let game_count = new CreateElement("game_count")
         let grid = this.build_digits_grid()
-        game.addClass("middle").block()
+        game.addClass("middle-width").block()
         game_count.addClass("game-countdown").addClass("countdown-digits").setID("gamecount")
         let get_digit_div = new CreateElement("get_digit_div").block()
         for (let i = 0; i < 4; i++)

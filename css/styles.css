@@ -36,6 +36,13 @@
     transform: translate(-50%, -50%);
 }
 
+.middle-width {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+}
+
 .countdown-digits {
     font-size: larger;
     font-weight: 900;
@@ -58,11 +65,14 @@
 
 .show-4-digits {
     display: inline-block;
-    width: 2rem;
-    height: 2rem;
+    width: 3.5
+    rem;
+    height: 3.5
+    rem;
     text-align: center;
     vertical-align: middle;
-    line-height: 2rem;
+    line-height: 3.5
+    rem;
     font-size: larger;
     font-weight: 900;
     pointer-events: none;
@@ -70,11 +80,14 @@
 
 .get-4-digits {
     display: inline-block;
-    width: 2rem;
-    height: 2rem;
+    width: 3.5
+    rem;
+    height: 3.5
+    rem;
     text-align: center;
     vertical-align: middle;
-    line-height: 2rem;
+    line-height: 3.5
+    rem;
     font-size: larger;
     font-weight: 900;
 }

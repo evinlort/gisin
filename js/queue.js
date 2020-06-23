@@ -12,6 +12,8 @@ export class Queue {
     add(...scenes) {
         var i = 0
         for (var scene of scenes) {
+            if (scene === undefined)
+                continue
             if (this.queue.indexOf(scene) === 0) {
                 scene.setId(i++)
                 this.queue.push(scene)
