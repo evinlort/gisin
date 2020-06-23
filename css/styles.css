@@ -129,7 +129,7 @@
     outline: 5px ridge lawngreen;
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 1100px) {
     .grid {
       width: 22vw;
       margin: 0 auto;
