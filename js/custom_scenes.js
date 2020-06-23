@@ -39,7 +39,7 @@ export class CustScene2 extends Scene {
 
 
 export class CustScene3 extends Scene {
-    dev = true
+    dev = false
     body() {
         var queue = new Queue()
         // eval("evg = 12") // creates variable `evg` with value of 12
@@ -150,6 +150,6 @@ class GetDigits extends CustScene3 {
         game.addElement(get_digit_div)
         game.addElement(grid)
         renderer.render(game, game_count)
-        // this.cd_rerender(game_count, 6)
+        this.cd_rerender(game_count, 6)
     }
 }
