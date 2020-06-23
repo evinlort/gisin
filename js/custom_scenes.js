@@ -39,15 +39,18 @@ export class CustScene2 extends Scene {
 
 
 export class CustScene3 extends Scene {
+    dev = true
     body() {
         var queue = new Queue()
         // eval("evg = 12") // creates variable `evg` with value of 12
-        var show,show2,show3,get,get2,get3
-        var show = new ShowDigits()
-        var show2 = new ShowDigits()
-        var get = new GetDigits()
-        var show3 = new ShowDigits()
-        var get2 = new GetDigits()
+        var show, show2, show3, get, get2, get3
+        if (!this.dev) {
+            var show = new ShowDigits()
+            var show2 = new ShowDigits()
+            var get = new GetDigits()
+            var show3 = new ShowDigits()
+            var get2 = new GetDigits()
+        }
         var get3 = new GetDigits()
 
         queue.add(show, show2, get, show3, get2, get3)
@@ -64,11 +67,14 @@ export class CustScene3 extends Scene {
 
     create_get_input(grid, i) {
         let input = new CreateElement("input")
-        input.setAttr("id", "getInp-"+i).addClass("get-4-digits").value("").setAttr("onfocus", "this.blur();")
+        input.setAttr("id", "getInp-" + i).addClass("get-4-digits").value("").setAttr("onfocus", "this.blur();")
         input.click((e) => {
             e.stopPropagation()
             grid.setAttr("data-input_id", i)
-            grid.getElement().style.display = 'block'
+            CreateElement.getSiblings(input).forEach(elem => {
+                elem.classList.remove("selected-input")
+            })
+            input.addClass("selected-input")
         })
         return input
     }
@@ -87,26 +93,25 @@ export class CustScene3 extends Scene {
     build_digits_grid() {
         let numb = 1
         let grid = new CreateElement("grid")
-        for (var i = 0; i < 3; i++) {
-            let row = new CreateElement("row")
-            row.addClass("grid-row")
-            for (var j = 0; j < 3; j++) {
-                let digit = new CreateElement("digit").text(numb++).addClass("grid-digit")
-                digit.click((e) => {
-                    let inp = document.getElementById("getInp-"+e.target.parentElement.parentElement.dataset.input_id)
-                    inp.value = digit.getElement().textContent
-                    e.target.parentElement.parentElement.style.display = 'none'
-                })
-                row.addElement(digit)
-            }
-            grid.addElement(row)
+        for (var j = 0; j < 9; j++) {
+            let digit = new CreateElement("digit").text(numb++).addClass("grid-digit")
+            digit.click((e) => {
+                let inp = document.getElementById("getInp-" + e.target.parentElement.dataset.input_id)
+                inp.value = digit.getElement().textContent
+                if (inp.nextSibling != null)
+                    inp.nextSibling.dispatchEvent(new Event("click"))
+                else
+                    inp.parentNode.firstChild.dispatchEvent(new Event("click"))
+                
+            })
+            grid.addElement(digit)
         }
         grid.addClass("grid")
         return grid
     }
 }
 
-export class CustSceneEnd extends Scene{
+export class CustSceneEnd extends Scene {
     body() {
         let end = new CreateElement("end")
         end.text("The End").addClass("middle")
@@ -139,7 +144,8 @@ class GetDigits extends CustScene3 {
         for (let i = 0; i < 4; i++)
             get_digit_div.addElement(this.create_get_input(grid, i))
         game.addElement(get_digit_div)
-        renderer.render(game, game_count, grid)
-        this.cd_rerender(game_count, 6)
+        game.addElement(grid)
+        renderer.render(game, game_count)
+        // this.cd_rerender(game_count, 6)
     }
 }

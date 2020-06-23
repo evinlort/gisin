@@ -9,10 +9,10 @@ export default class Renderer {
         else
             this.app = document.getElementById(app_element)
         this.app.innerHTML = null
-        window.addEventListener("click", () => {
-            if (document.querySelector("grid") !== null)
-                document.querySelector("grid").style.display = "none"
-        })
+        // window.addEventListener("click", () => {
+        //     if (document.querySelector("grid") !== null)
+        //         document.querySelector("grid").style.display = "none"
+        // })
 
     }
 
