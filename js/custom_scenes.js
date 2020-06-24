@@ -1,4 +1,5 @@
 import Scene from './scene.js'
+import Storage from './storage.js'
 import Renderer from './renderer.js'
 import { Queue } from './queue.js'
 import { CreateElement } from './element.js'
@@ -17,18 +18,15 @@ export class CustScene1 extends Scene {
 
 export class CustScene2 extends Scene {
     body() {
-        l("Scene 2")
         let countdown = new CreateElement("countdown")
         countdown.addClass("countdown-digits").addClass("middle")
         const cd_rerender = (e, i) => {
             e.text(i);
             renderer.render(e)
             setTimeout(() => {
-                l("-1 sec")
                 if (--i)
                     cd_rerender(e, i)
                 else {
-                    l("STOP")
                     this.stop()
                 }
             }, 1000)
@@ -39,23 +37,32 @@ export class CustScene2 extends Scene {
 
 
 export class CustScene3 extends Scene {
-    dev = false
+    constructor() {
+        super()
+        this.number_of_repeats = 1
+        this.number_of_digits = 4
+    }
+
     body() {
         var queue = new Queue()
-        // eval("evg = 12") // creates variable `evg` with value of 12
-        var show = new ShowDigits()
-        if (!this.dev) {
-            for(var i = 1;i < 4; i++) {
-                window["show"+i] = new ShowDigits()
-                window["get"+i] = new GetDigits()
-            }
-            var getEnd = new GetDigits()
-        }
 
-        queue.add(show, show1, get1, show2, get2, show3, get3, getEnd)
+        var show_get = this.get_show_get(this.number_of_repeats)
+        queue.add(show_get)
         queue.run(
             () => this.stop()
         )
+    }
+
+    get_show_get(numb) {
+        var sg_array = Array()
+        var char_numb = 65
+        sg_array.push(new ShowDigits(String.fromCharCode(char_numb)))
+        for (var i = 2; i <= numb; i++) {
+            sg_array.push(new ShowDigits(String.fromCharCode(char_numb + i - 1)))
+            sg_array.push(new GetDigits(String.fromCharCode(char_numb + i - 2)))
+        }
+        sg_array.push(new GetDigits(String.fromCharCode(char_numb + i - 2)))
+        return sg_array
     }
 
     create_random_input() {
@@ -82,14 +89,20 @@ export class CustScene3 extends Scene {
         return input
     }
 
-    cd_rerender(gc, i) {
+    cd_rerender(gc, i, callback = null) {
         gc.text(i);
 
         setTimeout(() => {
             if (--i > 0)
-                this.cd_rerender(gc, i)
-            else
-                this.stop()
+                this.cd_rerender(gc, i, callback)
+            else {
+                if (callback) {
+                    if (callback())
+                        this.stop()
+                }
+                else
+                    this.stop()
+            }
         }, 1000)
     }
 
@@ -115,40 +128,89 @@ export class CustScene3 extends Scene {
 }
 
 export class CustSceneEnd extends Scene {
+    constructor() {
+        super()
+        this.storage = new Storage()
+    }
+    
     body() {
         let end = new CreateElement("end")
-        end.text("The End").addClass("middle")
+        end.text("The End").addClass("middle").block()
+        let result = new CreateElement("result")
+        l(this.storage.get_all())
+        result.html("The rezul'tat").addClass("middle")
+        end.addElement(result)
         renderer.render(end)
         this.stop()
     }
 }
 
 class ShowDigits extends CustScene3 {
+    constructor(numb) {
+        super()
+        this.numb = numb
+        this.wait_to_show = 3
+        this.storage = new Storage()
+    }
+
     body() {
         let game = new CreateElement("GAME")
+        let h1 = new CreateElement("h1")
         let game_count = new CreateElement("game_count")
         game.addClass("middle-width").block()
+        h1.text(this.numb)
         game_count.addClass("game-countdown").addClass("countdown-digits").setID("gamecount")
-        for (let i = 0; i < 4; i++)
-            game.addElement(this.create_random_input())
+        game.addElement(h1)
+        var digits_to_store = Array()
+        for (let i = 0; i < this.number_of_digits; i++) {
+            let input = this.create_random_input()
+            l(input.getElement().value)
+            digits_to_store.push(parseInt(input.getElement().value))
+            game.addElement(input)
+        }
+        this.storage.add({ "name": "show" + this.numb, "data": digits_to_store })
         renderer.render(game, game_count)
-        this.cd_rerender(game_count, 3)
+        this.cd_rerender(game_count, this.wait_to_show)
     }
 }
 
 class GetDigits extends CustScene3 {
+    constructor(numb) {
+        super()
+        this.numb = numb
+        this.wait_for_get = 5
+        this.storage = new Storage()
+    }
+
     body() {
+        l(this.storage.get("show" + this.numb))
         let game = new CreateElement("GAME")
+        let h1 = new CreateElement("h1")
         let game_count = new CreateElement("game_count")
         let grid = this.build_digits_grid()
         game.addClass("middle-width").block()
+        h1.text(this.numb)
         game_count.addClass("game-countdown").addClass("countdown-digits").setID("gamecount")
+        game.addElement(h1)
         let get_digit_div = new CreateElement("get_digit_div").block()
-        for (let i = 0; i < 4; i++)
+        for (let i = 0; i < this.number_of_digits; i++)
             get_digit_div.addElement(this.create_get_input(grid, i))
         game.addElement(get_digit_div)
         game.addElement(grid)
         renderer.render(game, game_count)
-        this.cd_rerender(game_count, 6)
+        this.cd_rerender(game_count, this.wait_for_get, () => {
+            var digits_to_store =this.get_get_digits(get_digit_div)
+            this.storage.add({ "name": "get" + this.numb, "data": digits_to_store })
+            return true
+        })
+    }
+
+    get_get_digits(get_digit_div) {
+        var digits = Array()
+        get_digit_div.getElement().childNodes.forEach(node => {
+            let val = parseInt(node.value)
+            digits.push(val?val:0)
+        })
+        return digits
     }
 }

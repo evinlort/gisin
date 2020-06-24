@@ -10,6 +10,9 @@ export class Queue {
     }
 
     add(...scenes) {
+        if (scenes.length == 1 && Array.isArray(scenes)) {
+            scenes = scenes[0]
+        }
         var i = 0
         for (var scene of scenes) {
             if (scene === undefined)
@@ -41,7 +44,7 @@ export class Queue {
         })
     }
 
-    run(callback=null) {
+    run(callback = null) {
         (function sceneLoop(i, that) {
             setTimeout(function () {
                 if (that.queue[i].getStatus() === -1) {
@@ -56,7 +59,7 @@ export class Queue {
                         sceneLoop(i, that)
                     }
                     else {
-                        if(callback)
+                        if (callback)
                             callback()
                     }
                 }
