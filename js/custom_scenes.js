@@ -43,17 +43,16 @@ export class CustScene3 extends Scene {
     body() {
         var queue = new Queue()
         // eval("evg = 12") // creates variable `evg` with value of 12
-        var show, show2, show3, get, get2, get3
+        var show = new ShowDigits()
         if (!this.dev) {
-            var show = new ShowDigits()
-            var show2 = new ShowDigits()
-            var get = new GetDigits()
-            var show3 = new ShowDigits()
-            var get2 = new GetDigits()
+            for(var i = 1;i < 4; i++) {
+                window["show"+i] = new ShowDigits()
+                window["get"+i] = new GetDigits()
+            }
+            var getEnd = new GetDigits()
         }
-        var get3 = new GetDigits()
 
-        queue.add(show, show2, get, show3, get2, get3)
+        queue.add(show, show1, get1, show2, get2, show3, get3, getEnd)
         queue.run(
             () => this.stop()
         )

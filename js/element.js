@@ -64,18 +64,23 @@ export class CreateElement {
 
     static getSiblings(element) {
         var siblings = []
-        var elem =  null
+        var elem = null
         if (element instanceof this)
             elem = element.getElement()
-        else   
+        else
             elem = element
-        var sibling = elem.parentNode.firstChild
-        while (sibling) {
-            if (sibling.nodeType === 1 && sibling !== elem) {
-                siblings.push(sibling)
+        try {
+            var sibling = elem.parentNode.firstChild
+            while (sibling) {
+                if (sibling.nodeType === 1 && sibling !== elem) {
+                    siblings.push(sibling)
+                }
+                sibling = sibling.nextSibling
             }
-            sibling = sibling.nextSibling
+            return siblings
         }
-        return siblings
+        catch {
+            return []
+        }
     }
 }
