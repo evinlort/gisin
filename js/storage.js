@@ -13,7 +13,6 @@ export default class Storage{
 
     add(data) {
         this.storage[data["name"]] = data["data"]
-        l(data)
     }
 
     get(name) {

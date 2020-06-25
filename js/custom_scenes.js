@@ -1,6 +1,7 @@
 import Scene from './scene.js'
 import Storage from './storage.js'
 import Renderer from './renderer.js'
+import Calculator from './calculator.js'
 import { Queue } from './queue.js'
 import { CreateElement } from './element.js'
 import { l, render, randomInteger } from './helpers.js'
@@ -131,14 +132,17 @@ export class CustSceneEnd extends Scene {
     constructor() {
         super()
         this.storage = new Storage()
+        this.calculator = new Calculator(this.storage)
     }
     
     body() {
         let end = new CreateElement("end")
-        end.text("The End").addClass("middle").block()
+        let end_message = new CreateElement("span")
+        end.addClass("middle").block()
+        end_message.text("The End").block()
         let result = new CreateElement("result")
-        l(this.storage.get_all())
-        result.html("The rezul'tat").addClass("middle")
+        result.html(this.calculator.get_result())
+        end.addElement(end_message)
         end.addElement(result)
         renderer.render(end)
         this.stop()
@@ -149,7 +153,7 @@ class ShowDigits extends CustScene3 {
     constructor(numb) {
         super()
         this.numb = numb
-        this.wait_to_show = 3
+        this.wait_to_show = 1
         this.storage = new Storage()
     }
 
@@ -164,7 +168,6 @@ class ShowDigits extends CustScene3 {
         var digits_to_store = Array()
         for (let i = 0; i < this.number_of_digits; i++) {
             let input = this.create_random_input()
-            l(input.getElement().value)
             digits_to_store.push(parseInt(input.getElement().value))
             game.addElement(input)
         }
@@ -178,12 +181,11 @@ class GetDigits extends CustScene3 {
     constructor(numb) {
         super()
         this.numb = numb
-        this.wait_for_get = 5
+        this.wait_for_get = 1
         this.storage = new Storage()
     }
 
     body() {
-        l(this.storage.get("show" + this.numb))
         let game = new CreateElement("GAME")
         let h1 = new CreateElement("h1")
         let game_count = new CreateElement("game_count")
