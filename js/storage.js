@@ -2,9 +2,9 @@ import { l } from "./helpers.js"
 
 var instance = null
 
-export default class Storage{
-    constructor(){
-        if(!instance) {
+export default class Storage {
+    constructor() {
+        if (!instance) {
             instance = this
         }
         this.storage = {}
@@ -12,7 +12,10 @@ export default class Storage{
     }
 
     add(data) {
-        this.storage[data["name"]] = data["data"]
+        if (!(data["name"] in this.storage)) {
+            this.storage[data["name"]] = Array()
+        }
+        this.storage[data["name"]].push(data["data"])
     }
 
     get(name) {

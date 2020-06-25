@@ -40,7 +40,7 @@ export class CustScene2 extends Scene {
 export class CustScene3 extends Scene {
     constructor() {
         super()
-        this.number_of_repeats = 1
+        this.number_of_repeats = 5
         this.number_of_digits = 4
     }
 
@@ -137,12 +137,12 @@ export class CustSceneEnd extends Scene {
     
     body() {
         let end = new CreateElement("end")
-        let end_message = new CreateElement("span")
-        end.addClass("middle").block()
-        end_message.text("The End").block()
+        // let end_message = new CreateElement("span")
+        end.addClass("middle-top-width").block()
+        // end_message.text("The End").block()
         let result = new CreateElement("result")
         result.html(this.calculator.get_result())
-        end.addElement(end_message)
+        // end.addElement(end_message)
         end.addElement(result)
         renderer.render(end)
         this.stop()
@@ -153,7 +153,7 @@ class ShowDigits extends CustScene3 {
     constructor(numb) {
         super()
         this.numb = numb
-        this.wait_to_show = 1
+        this.wait_to_show = 3
         this.storage = new Storage()
     }
 
@@ -171,7 +171,7 @@ class ShowDigits extends CustScene3 {
             digits_to_store.push(parseInt(input.getElement().value))
             game.addElement(input)
         }
-        this.storage.add({ "name": "show" + this.numb, "data": digits_to_store })
+        this.storage.add({ "name": "show", "data":  {[this.numb]:digits_to_store}})
         renderer.render(game, game_count)
         this.cd_rerender(game_count, this.wait_to_show)
     }
@@ -181,7 +181,7 @@ class GetDigits extends CustScene3 {
     constructor(numb) {
         super()
         this.numb = numb
-        this.wait_for_get = 1
+        this.wait_for_get = 5
         this.storage = new Storage()
     }
 
@@ -202,7 +202,7 @@ class GetDigits extends CustScene3 {
         renderer.render(game, game_count)
         this.cd_rerender(game_count, this.wait_for_get, () => {
             var digits_to_store =this.get_get_digits(get_digit_div)
-            this.storage.add({ "name": "get" + this.numb, "data": digits_to_store })
+            this.storage.add({ "name": "get", "data": {[this.numb]: digits_to_store} })
             return true
         })
     }

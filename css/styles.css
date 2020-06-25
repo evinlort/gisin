@@ -44,6 +44,14 @@
     left: 0%;
 }
 
+.middle-top-width {
+    position: absolute;
+    top: 10%;
+    width: 100%;
+    text-align: center;
+    left: 0%;
+}
+
 .countdown-digits {
     font-size: larger;
     font-weight: 900;
