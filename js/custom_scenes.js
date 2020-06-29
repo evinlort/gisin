@@ -18,6 +18,10 @@ export class CustScene1 extends Scene {
 }
 
 export class CustScene2 extends Scene {
+    constructor(){
+        super()
+        this.wait_before_start = 3
+    }
     body() {
         let countdown = new CreateElement("countdown")
         countdown.addClass("countdown-digits").addClass("middle")
@@ -32,7 +36,7 @@ export class CustScene2 extends Scene {
                 }
             }, 1000)
         }
-        cd_rerender(countdown, 1)
+        cd_rerender(countdown, this.wait_before_start)
     }
 }
 
