@@ -7,22 +7,11 @@ export default class Scene {
         this.name = null
         this.status = -1
         this.config = this._set_config()
-        l("initttt",this.wait_before_start)
     }
 
     async _set_config() {
         var c = new Config()
         return await c.get_all()
-        // this.wait_before_start = await ret
-        // l(this.wait_before_start)
-
-        // fetch('../config.php')
-        //     .then((response) => {
-        //         return response.json();
-        //     })
-        //     .then((data) => {
-        //         console.log(data);
-        //     });
     }
 
     setId(id) {
