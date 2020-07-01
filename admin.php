@@ -4,7 +4,7 @@ require './vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$db = new mysqli('localhost', $_ENV['USER'], $_ENV['PASSWORD'], 'memory_app');
+$db = new mysqli('localhost', $_ENV['USERNAME'], $_ENV['PASSWORD'], 'memory_app');
 
 if ($_COOKIE['secretname586748xesjuyertfywertxgfzf4376r7438gt46ixtbfa7'] != true && (!$_POST || $_POST['user'] != 'evg' || $_POST['pass'] != 'evg')) {
 ?>
