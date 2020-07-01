@@ -51,27 +51,26 @@ export class CustScene3 extends Scene {
     }
 
     body() {
-        var queue = new Queue()
-
-        var show_get = this.get_show_get(this.number_of_repeats)
-        queue.add(show_get)
-        queue.run(
-            () => this.stop()
-        )
+        this.config.then(conf => {
+            var queue = new Queue()
+            var show_get = this.get_show_get(conf["number_of_repeats"])
+            queue.add(show_get)
+            queue.run(
+                () => this.stop()
+            )
+        })
     }
 
     get_show_get(numb) {
         var sg_array = Array()
         var char_numb = 65
         sg_array.push(new ShowDigits(String.fromCharCode(char_numb)))
-        return this.config.then(numb => {
-            for (var i = 2; i <= numb; i++) {
-                sg_array.push(new ShowDigits(String.fromCharCode(char_numb + i - 1)))
-                sg_array.push(new GetDigits(String.fromCharCode(char_numb + i - 2)))
-            }
+        for (var i = 2; i <= numb; i++) {
+            sg_array.push(new ShowDigits(String.fromCharCode(char_numb + i - 1)))
             sg_array.push(new GetDigits(String.fromCharCode(char_numb + i - 2)))
-            return sg_array
-        })
+        }
+        sg_array.push(new GetDigits(String.fromCharCode(char_numb + i - 2)))
+        return sg_array
     }
 
     create_random_input() {
@@ -174,14 +173,18 @@ class ShowDigits extends CustScene3 {
         game_count.addClass("game-countdown").addClass("countdown-digits").setID("gamecount")
         game.addElement(h1)
         var digits_to_store = Array()
-        for (let i = 0; i < this.number_of_digits; i++) {
-            let input = this.create_random_input()
-            digits_to_store.push(parseInt(input.getElement().value))
-            game.addElement(input)
-        }
+        this.config.then(conf => {
+            for (let i = 0; i < conf["number_of_digits"]; i++) {
+                let input = this.create_random_input()
+                digits_to_store.push(parseInt(input.getElement().value))
+                game.addElement(input)
+            }
+        })
         this.storage.add({ "name": "show", "data": { [this.numb]: digits_to_store } })
         renderer.render(game, game_count)
-        this.cd_rerender(game_count, this.wait_to_show)
+        this.config.then(conf => {
+            this.cd_rerender(game_count, conf["wait_to_show"])
+        })
     }
 }
 
@@ -203,16 +206,20 @@ class GetDigits extends CustScene3 {
         game_count.addClass("game-countdown").addClass("countdown-digits").setID("gamecount")
         game.addElement(h1)
         let get_digit_div = new CreateElement("get_digit_div").block()
-        for (let i = 0; i < this.number_of_digits; i++)
-            get_digit_div.addElement(this.create_get_input(grid, i))
+        this.config.then(conf => {
+            for (let i = 0; i < conf["number_of_digits"]; i++)
+                get_digit_div.addElement(this.create_get_input(grid, i))
+        })
         game.addElement(get_digit_div)
         game.addElement(grid)
         renderer.render(game, game_count)
-        this.cd_rerender(game_count, this.wait_for_get, () => {
+        this.config.then(conf => {
+        this.cd_rerender(game_count, conf["wait_for_get"], () => {
             var digits_to_store = this.get_get_digits(get_digit_div)
             this.storage.add({ "name": "get", "data": { [this.numb]: digits_to_store } })
             return true
         })
+    })
     }
 
     get_get_digits(get_digit_div) {
