@@ -25,8 +25,8 @@ export default class Calculator {
             describing +="<div><span>--------------------------</span></div>"
         }
 
-        return '<div class="middle-width"><guess>Названо верно: \
-                <percent>'+counter*100/(number_of_digits*number_of_repeats)+'%</percent></guess> \
+        return '<div class="middle-width"><guess>Названо верно:<div> \
+                <percent>'+counter*100/(number_of_digits*number_of_repeats)+'%</percent></div></guess> \
                 <div>'+describing+'</div></div>\
         '
     }

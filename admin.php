@@ -41,7 +41,8 @@ width=device-width, height=device-height" />
 
     $db = new mysqli('localhost', $_ENV['USERNAME'], $_ENV['PASSWORD'], 'memory_app');
 
-    if ($_COOKIE['secretname586748xesjuyertfywertxgfzf4376r7438gt46ixtbfa7'] != true && (!$_POST || $_POST['user'] != 'evg' || $_POST['pass'] != 'evg')) {
+    if ($_COOKIE['secretname586748xesjuyertfywertxgfzf4376r7438gt46ixtbfa7'] != true && 
+    (!$_POST || $_POST['user'] != $_ENV['U'] || $_POST['pass'] !=  $_ENV['P'])) {
     ?>
         <form method="POST">
             <label>Имя</label>
