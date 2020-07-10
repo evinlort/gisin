@@ -10,6 +10,8 @@ import { CustScene1, CustScene2, CustScene3, CustSceneEnd } from './custom_scene
     var end = new CustSceneEnd()
 
     var queue = new Queue()
-    queue.add(sc1, sc2, sc3, end)
+    queue.add(sc1, sc2)
+    queue.add([sc3])
+    queue.add([end])
     queue.run()
 })()

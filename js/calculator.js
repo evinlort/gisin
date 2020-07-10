@@ -15,9 +15,9 @@ export default class Calculator {
         let describing = ""
         for (var i = 0; i < number_of_repeats; i++) {
             let show_vals = Object.values(shows[i])[0]
-            describing += "<div><span>Shown as "+Object.keys(shows[i])[0]+": "+show_vals.join(" ")+"</span></div>"
+            describing += "<div-row><span>Было показано "+Object.keys(shows[i])[0]+": "+show_vals.join(" ")+"</span></div>"
             let get_vals = Object.values(gets[i])[0]
-            describing += "<div><span>Your guess for "+Object.keys(shows[i])[0]+": "+get_vals.join(" ")+"</span></div>"
+            describing += "<div><span>Вы ответили "+Object.keys(shows[i])[0]+": "+get_vals.join(" ")+"</span></div-row>"
             for (var ind = 0; ind < number_of_digits; ind++) {
                 if(show_vals[ind] == get_vals[ind])
                     counter++
@@ -25,7 +25,8 @@ export default class Calculator {
             describing +="<div><span>--------------------------</span></div>"
         }
 
-        return '<div class="middle-width">Guessing right: '+counter*100/(number_of_digits*number_of_repeats)+'% \
+        return '<div class="middle-width"><guess>Названо верно: \
+                <percent>'+counter*100/(number_of_digits*number_of_repeats)+'%</percent></guess> \
                 <div>'+describing+'</div></div>\
         '
     }

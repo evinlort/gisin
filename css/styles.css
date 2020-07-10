@@ -32,13 +32,13 @@
 .middle {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 30%;
     transform: translate(-50%, -50%);
 }
 
 .middle-width {
     position: absolute;
-    top: 50%;
+    top: 30%;
     width: 100%;
     text-align: center;
     left: 0%;
@@ -68,7 +68,7 @@
 .game-countdown {
     position: absolute;
     left: 50%;
-    top: 20%;
+    top: 15%;
     transform: translate(-50%, -20%);
 }
 
@@ -135,6 +135,11 @@
 
 .selected-input {
     outline: 5px ridge lawngreen;
+}
+
+percent {
+    font-weight: 900;
+    font-size: x-large;
 }
 
 @media only screen and (min-width: 1100px) {
