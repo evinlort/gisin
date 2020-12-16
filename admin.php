@@ -38,8 +38,8 @@ width=device-width, height=device-height" />
 
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
     $dotenv->load();
-
-    $db = new mysqli('localhost', $_ENV['USERNAME'], $_ENV['PASSWORD'], 'memory_app');
+	
+    $db = new mysqli('127.0.0.1:3307', $_ENV['USERNAME'], $_ENV['PASSWORD'], 'memory_app');
 
     if ($_COOKIE['secretname586748xesjuyertfywertxgfzf4376r7438gt46ixtbfa7'] != true && 
     (!$_POST || $_POST['user'] != $_ENV['U'] || $_POST['pass'] !=  $_ENV['P'])) {
